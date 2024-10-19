@@ -7,16 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CardListBuilder {
-    public static List<PokemonCard> build(String response) {
-        List<PokemonCard> cards = new ArrayList<>();
+    private final CardBuilder cardBuilder;
+    private final List<PokemonCard> cards = new ArrayList<>();
+    private final Gson gson = new Gson();
 
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public CardListBuilder() {
+        this.cardBuilder = new CardBuilder();
+    }
 
+    public List<PokemonCard> build(String response) {
         JsonArray jsonArray = gson.fromJson(response, JsonObject.class).getAsJsonArray("data");
 
         for (JsonElement jsonElement : jsonArray) {
-            PokemonCard card = CardBuilder.makeCard(jsonElement);
-            cards.add(card);
+            cards.add(cardBuilder.makeCard(jsonElement));
         }
 
         return cards;

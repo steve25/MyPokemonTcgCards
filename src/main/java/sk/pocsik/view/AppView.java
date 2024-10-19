@@ -1,5 +1,7 @@
 package sk.pocsik.view;
 
+import sk.pocsik.view.addcardview.AddCardView;
+
 import javax.swing.*;
 import java.awt.*;
 

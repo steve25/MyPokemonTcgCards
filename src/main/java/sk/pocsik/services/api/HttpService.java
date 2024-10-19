@@ -44,7 +44,8 @@ public class HttpService {
             return response.body();
 
         } catch (URISyntaxException | IOException | InterruptedException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            return "[{}]";
         }
     }
 }

@@ -4,10 +4,14 @@ import com.google.gson.JsonElement;
 import sk.pocsik.models.PokemonCard;
 
 public class CardBuilder {
-    public static PokemonCard makeCard(JsonElement jsonElement) {
+
+    public PokemonCard makeCard(JsonElement jsonElement) {
         String id = jsonElement.getAsJsonObject().get("id").getAsString();
         String name = jsonElement.getAsJsonObject().get("name").getAsString();
-        String imageUrl = jsonElement.getAsJsonObject().getAsJsonObject("images").get("small").getAsString();
+        String imageUrl = jsonElement.getAsJsonObject()
+                .getAsJsonObject("images")
+                .get("small")
+                .getAsString();
 
         double price;
 
