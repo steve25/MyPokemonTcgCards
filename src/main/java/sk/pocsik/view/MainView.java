@@ -5,8 +5,8 @@ import sk.pocsik.view.addcardview.AddCardView;
 import javax.swing.*;
 import java.awt.*;
 
-public class AppView extends JFrame {
-    public AppView() {
+public class MainView extends JFrame {
+    public MainView() {
         this.setTitle("My Pokemon TCG Cards");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);

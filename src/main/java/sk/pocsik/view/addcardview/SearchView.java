@@ -19,6 +19,7 @@ public class SearchView extends JPanel {
 
     public SearchView() {
         this.searchService = new SearchService();
+
         this.init();
 
         searchField.addActionListener(new AbstractAction() {

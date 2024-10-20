@@ -4,29 +4,41 @@ import sk.pocsik.models.PokemonCard;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ResultView extends JPanel {
-    private List<PokemonCard> pokemonCards = new ArrayList<>();
     public ResultView() {
         this.init();
-
-        for (int i = 0; i < 10; i++) {
-            JPanel cardPanel = new JPanel();
-            cardPanel.setPreferredSize(new Dimension(100, 200));
-            cardPanel.setBackground(new Color((int)(Math.random() * 0x1000000)));
-            this.add(cardPanel);
-        }
     }
 
     private void init() {
-        this.setPreferredSize(new Dimension(640, 400));
+        this.setPreferredSize(new Dimension(640, super.getPreferredSize().height));
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
     }
 
     public void updateCards(List<PokemonCard> pokemonCards) {
-        this.pokemonCards = pokemonCards;
-        System.out.println("Updated cards: " + this.pokemonCards.size());
+        System.out.println(pokemonCards.size());
+
+        this.removeAll();
+
+
+        for (PokemonCard pokemonCard : pokemonCards) {
+            this.add(new PokemonCardView(pokemonCard));
+        }
+
+        this.revalidate();
+        this.repaint();
+
+        updatePreferredSize();
+    }
+
+    private void updatePreferredSize() {
+        int rows = (int) Math.ceil(this.getComponentCount() / 5.0);
+        int height = rows * 220;
+
+        this.setPreferredSize(new Dimension(640, height));
+
+        this.revalidate();
+        this.repaint();
     }
 }

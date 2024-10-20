@@ -4,13 +4,12 @@ import sk.pocsik.models.PokemonCard;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class AddCardView extends JFrame implements SearchResultListener {
     private final ResultView resultView;
     private final SearchView searchView;
-    private final List<PokemonCard> pokemonCards = new ArrayList<>();
+
 
     public AddCardView() {
         this.init();
@@ -41,9 +40,6 @@ public class AddCardView extends JFrame implements SearchResultListener {
 
     @Override
     public void onSearchResult(List<PokemonCard> pokemonCards) {
-        this.pokemonCards.clear();
-        this.pokemonCards.addAll(pokemonCards);
-
         resultView.updateCards(pokemonCards);
     }
 }
