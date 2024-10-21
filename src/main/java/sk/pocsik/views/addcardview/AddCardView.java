@@ -1,4 +1,4 @@
-package sk.pocsik.view.addcardview;
+package sk.pocsik.views.addcardview;
 
 import sk.pocsik.models.PokemonCard;
 
@@ -34,7 +34,7 @@ public class AddCardView extends JFrame implements SearchResultListener {
         this.setTitle("Search Pokemon TCG Cards");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setResizable(false);
-        this.setSize(680, 460);
+        this.setSize(1600, 1200);
         this.setLayout(new BorderLayout(0, 10));
     }
 

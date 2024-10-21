@@ -1,4 +1,4 @@
-package sk.pocsik.view.addcardview;
+package sk.pocsik.views.addcardview;
 
 import sk.pocsik.models.PokemonCard;
 
@@ -21,20 +21,18 @@ public class ResultView extends JPanel {
 
         this.removeAll();
 
-
         for (PokemonCard pokemonCard : pokemonCards) {
             this.add(new PokemonCardView(pokemonCard));
         }
-
-        this.revalidate();
-        this.repaint();
 
         updatePreferredSize();
     }
 
     private void updatePreferredSize() {
-        int rows = (int) Math.ceil(this.getComponentCount() / 5.0);
+        int rows = (int) Math.ceil(this.getComponentCount() / 4.0);
         int height = rows * 220;
+
+        System.out.println(height);
 
         this.setPreferredSize(new Dimension(640, height));
 

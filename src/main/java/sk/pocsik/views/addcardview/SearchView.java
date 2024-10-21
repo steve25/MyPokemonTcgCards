@@ -1,4 +1,4 @@
-package sk.pocsik.view.addcardview;
+package sk.pocsik.views.addcardview;
 
 import lombok.Setter;
 import sk.pocsik.models.PokemonCard;
