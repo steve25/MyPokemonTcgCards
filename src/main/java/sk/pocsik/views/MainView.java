@@ -1,5 +1,6 @@
 package sk.pocsik.views;
 
+import sk.pocsik.utils.UserInfo;
 import sk.pocsik.views.addcardview.AddCardView;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ public class MainView extends JFrame {
         this.setResizable(false);
         this.setSize(1870, 1030);
 
+        System.out.println(UserInfo.getUserId() + ":" + UserInfo.getUserName());
+
         Container container = getContentPane();
         container.setLayout(new FlowLayout());
 
@@ -19,7 +22,7 @@ public class MainView extends JFrame {
         searchButton.addActionListener(e -> new AddCardView());
         container.add(searchButton);
 
-        setLocationRelativeTo(null);
-        setVisible(true);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 }

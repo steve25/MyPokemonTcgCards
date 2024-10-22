@@ -1,6 +1,7 @@
 package sk.pocsik;
 
-import sk.pocsik.view.MainView;
+import sk.pocsik.views.authenticate.LoginView;
+
 import java.awt.*;
 
 public class Main {
@@ -9,11 +10,6 @@ public class Main {
         float scaleFactor = dpi / 96.0f;
         System.setProperty("sun.java2d.uiScale", Float.toString(scaleFactor));
 
-        new MainView();
-
-
-
-        new MainView();
-
+        new LoginView();
     }
 }
