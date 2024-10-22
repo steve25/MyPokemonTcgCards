@@ -1,7 +1,8 @@
 package sk.pocsik.views.authenticate;
 
 import sk.pocsik.services.AuthService;
-import sk.pocsik.views.MainView;
+import sk.pocsik.utils.UserInfo;
+import sk.pocsik.views.main.MainView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -23,6 +24,8 @@ public class LoginView extends JFrame {
         this.authService = new AuthService();
 
         this.init();
+
+        System.out.println(UserInfo.getUserName());
 
         this.loginButton.addActionListener(e -> this.loginAction());
 
@@ -70,6 +73,7 @@ public class LoginView extends JFrame {
         this.setSize(350, 180);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         this.panel = new JPanel();
         this.panel.setLayout(new GridLayout(3, 2, 10, 10));

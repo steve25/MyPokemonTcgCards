@@ -19,11 +19,11 @@ public class AuthService {
     public boolean authenticate(String username, String password) {
         User user = userService.findUserByName(username);
 
-        if (user == null) return false;
+        if (user == null || !passwordEncoder.matches(password, user.getPassword())) return false;
 
         UserInfo.setUserInfo(user.getId(), user.getUsername());
 
-        return passwordEncoder.matches(password, user.getPassword());
+        return true;
     }
 
     public void register(String username, String password) {
@@ -36,5 +36,9 @@ public class AuthService {
 
     public boolean checkIfExists(String username) {
         return userService.findUserByName(username) != null;
+    }
+
+    public void logout() {
+        UserInfo.setUserInfo(null, null);
     }
 }

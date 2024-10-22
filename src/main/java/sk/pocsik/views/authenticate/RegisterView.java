@@ -1,7 +1,7 @@
 package sk.pocsik.views.authenticate;
 
 import sk.pocsik.services.AuthService;
-import sk.pocsik.views.MainView;
+import sk.pocsik.views.main.MainView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -96,6 +96,7 @@ public class RegisterView extends JFrame {
         this.setSize(400, 200);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
 
         this.panel = new JPanel();
         this.panel.setLayout(new GridLayout(4, 2, 10, 10));

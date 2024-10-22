@@ -7,7 +7,6 @@ public abstract class UserInfo {
     @Getter
     private static Long userId =  null;
     @Getter
-
     private static String userName = null;
 
     public static void setUserInfo(Long userId, String userName) {
