@@ -35,7 +35,7 @@ public class LoginView extends JFrame {
     }
 
     private void loginAction() {
-        String username = this.usernameField.getText();
+        String username = this.usernameField.getText().trim();
         String password = new String(this.passwordField.getPassword());
 
         // REMOVE THIS CODE TODO

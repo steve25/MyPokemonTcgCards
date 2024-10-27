@@ -58,7 +58,7 @@ public class RegisterView extends JFrame {
     }
 
     private void registerAction() {
-        String username = this.usernameField.getText();
+        String username = this.usernameField.getText().trim();
         String password = new String(this.passwordField.getPassword());
         String confirmPassword = new String(this.confirmPasswordField.getPassword());
 
