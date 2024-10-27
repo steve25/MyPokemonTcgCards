@@ -20,7 +20,7 @@ public class AuthService {
         User user = userService.findUserByName(username);
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) return false;
 
-        UserInfo.setUserInfo(user.getId(), user.getUsername());
+        UserInfo.setUserInfo(user);
 
         return true;
     }
@@ -30,7 +30,7 @@ public class AuthService {
         User user = new User(username, hashedPassword);
         userService.save(user);
 
-        UserInfo.setUserInfo(user.getId(), user.getUsername());
+        UserInfo.setUserInfo(user);
     }
 
     public boolean checkIfExists(String username) {
@@ -38,6 +38,6 @@ public class AuthService {
     }
 
     public void logout() {
-        UserInfo.setUserInfo(null, null);
+        UserInfo.setUserInfo(null);
     }
 }

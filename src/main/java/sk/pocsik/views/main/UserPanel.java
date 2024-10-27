@@ -19,7 +19,7 @@ public class UserPanel extends JPanel {
     }
 
     private void init() {
-        JLabel userNameLabel = new JLabel("Welcome: " + UserInfo.getUserName());
+        JLabel userNameLabel = new JLabel("Welcome: " + UserInfo.getUser().getUsername());
         JButton logoutButton = new JButton("Logout");
 
         logoutButton.addActionListener(e -> {

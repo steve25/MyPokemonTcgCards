@@ -25,14 +25,9 @@ public class LoginView extends JFrame {
 
         this.init();
 
-        System.out.println(UserInfo.getUserName());
-
         this.loginButton.addActionListener(e -> this.loginAction());
-
         this.usernameField.addActionListener(UIHelper.getEnterAction(this::loginAction));
-
         this.passwordField.addActionListener(UIHelper.getEnterAction(this::loginAction));
-
         this.registerButton.addActionListener(e -> this.registerAction());
 
         this.add(panel);
