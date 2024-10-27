@@ -11,9 +11,9 @@ public class UserPanel extends JPanel {
     private JFrame parentFrame;
 
 
-    public UserPanel(JFrame parentFrame) {
+    public UserPanel(JFrame parentFrame, AuthService authService) {
         this.parentFrame = parentFrame;
-        this.authService = new AuthService();
+        this.authService = authService;
 
         this.init();
     }
@@ -24,7 +24,7 @@ public class UserPanel extends JPanel {
 
         logoutButton.addActionListener(e -> {
             authService.logout();
-            new LoginView();
+            new LoginView(authService);
             parentFrame.dispose(); // Close the current window when logging out.
         });
 

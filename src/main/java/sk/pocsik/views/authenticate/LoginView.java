@@ -1,13 +1,13 @@
 package sk.pocsik.views.authenticate;
 
 import sk.pocsik.services.AuthService;
+import sk.pocsik.utils.UIHelper;
 import sk.pocsik.utils.UserInfo;
 import sk.pocsik.views.main.MainView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class LoginView extends JFrame {
     private AuthService authService;
@@ -20,8 +20,8 @@ public class LoginView extends JFrame {
     private JButton registerButton;
 
 
-    public LoginView() {
-        this.authService = new AuthService();
+    public LoginView(AuthService authService) {
+        this.authService = authService;
 
         this.init();
 
@@ -29,24 +29,14 @@ public class LoginView extends JFrame {
 
         this.loginButton.addActionListener(e -> this.loginAction());
 
-        this.usernameField.addActionListener(this.enterAction());
+        this.usernameField.addActionListener(UIHelper.getEnterAction(this::loginAction));
 
-        this.passwordField.addActionListener(this.enterAction());
+        this.passwordField.addActionListener(UIHelper.getEnterAction(this::loginAction));
 
         this.registerButton.addActionListener(e -> this.registerAction());
 
         this.add(panel);
         this.setVisible(true);
-    }
-
-    private Action enterAction() {
-        return new AbstractAction() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                loginAction();
-            }
-        };
     }
 
     private void loginAction() {
@@ -55,13 +45,13 @@ public class LoginView extends JFrame {
 
         // REMOVE THIS CODE TODO
         if (username.equals("s")) {
-            new MainView();
+            new MainView(authService);
             this.dispose();
             return;
         }
 
         if (authService.authenticate(username, password)) {
-            new MainView();
+            new MainView(authService);
             this.dispose();
         } else {
             this.usernameField.requestFocusInWindow();
@@ -71,7 +61,7 @@ public class LoginView extends JFrame {
     }
 
     private void registerAction() {
-        new RegisterView(this);
+        new RegisterView(this, this.authService);
         this.dispose();
     }
 

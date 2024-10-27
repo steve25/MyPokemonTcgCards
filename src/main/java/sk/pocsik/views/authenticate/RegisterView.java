@@ -1,12 +1,12 @@
 package sk.pocsik.views.authenticate;
 
 import sk.pocsik.services.AuthService;
+import sk.pocsik.utils.UIHelper;
 import sk.pocsik.views.main.MainView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -24,9 +24,9 @@ public class RegisterView extends JFrame {
     private JButton registerButton;
     private JButton cancelButton;
 
-    public RegisterView(JFrame parentFrame) {
+    public RegisterView(JFrame parentFrame, AuthService authService) {
         this.parentFrame = parentFrame;
-        this.authService = new AuthService();
+        this.authService = authService;
 
         this.init();
 
@@ -34,13 +34,11 @@ public class RegisterView extends JFrame {
             this.registerAction();
         });
 
-        this.usernameField.addActionListener(this.enterAction());
-        this.passwordField.addActionListener(this.enterAction());
-        this.confirmPasswordField.addActionListener(this.enterAction());
+        this.usernameField.addActionListener(UIHelper.getEnterAction(this::registerAction));
+        this.passwordField.addActionListener(UIHelper.getEnterAction(this::registerAction));
+        this.confirmPasswordField.addActionListener(UIHelper.getEnterAction(this::registerAction));
 
-        this.cancelButton.addActionListener(e -> {
-            this.onCloseAction();
-        });
+        this.cancelButton.addActionListener(e -> this.onCloseAction());
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -56,16 +54,6 @@ public class RegisterView extends JFrame {
     private void onCloseAction() {
         this.parentFrame.setVisible(true);
         dispose();
-    }
-
-    private Action enterAction() {
-        return new AbstractAction() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                registerAction();
-            }
-        };
     }
 
     private void registerAction() {
@@ -87,7 +75,7 @@ public class RegisterView extends JFrame {
         }
 
         this.authService.register(username, password);
-        new MainView();
+        new MainView(authService);
         this.dispose();
     }
 

@@ -18,7 +18,6 @@ public class AuthService {
 
     public boolean authenticate(String username, String password) {
         User user = userService.findUserByName(username);
-
         if (user == null || !passwordEncoder.matches(password, user.getPassword())) return false;
 
         UserInfo.setUserInfo(user.getId(), user.getUsername());

@@ -1,16 +1,19 @@
 package sk.pocsik.views.main;
 
+import sk.pocsik.services.AuthService;
 import sk.pocsik.views.addcardview.AddCardView;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class MainView extends JFrame {
+    private final AuthService authService;
 
-    public MainView() {
+    public MainView(AuthService authService) {
+        this.authService = authService;
         this.init();
 
-        JPanel userPanel = new UserPanel(this);
+        JPanel userPanel = new UserPanel(this, authService);
 
         this.add(userPanel, BorderLayout.NORTH);
 
