@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 public class RegisterView extends JFrame {
     private AuthService authService;
@@ -61,16 +62,9 @@ public class RegisterView extends JFrame {
         String password = new String(this.passwordField.getPassword());
         String confirmPassword = new String(this.confirmPasswordField.getPassword());
 
-        if (!password.equals(confirmPassword)
-                || username.trim().isEmpty()
-                || password.trim().isEmpty()
-        ) {
-            JOptionPane.showMessageDialog(null, "Empty username, or passwords do not match. Please try again.");
-            return;
-        }
-
-        if (authService.checkIfExists(username)) {
-            JOptionPane.showMessageDialog(null, "Username is taken");
+        List<String> errors = authService.checkRegisterFields(username, password, confirmPassword);
+        if (!errors.isEmpty()) {
+            JOptionPane.showMessageDialog(null, String.join("\n", errors));
             return;
         }
 

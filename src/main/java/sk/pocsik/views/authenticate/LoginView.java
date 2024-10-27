@@ -2,12 +2,12 @@ package sk.pocsik.views.authenticate;
 
 import sk.pocsik.services.AuthService;
 import sk.pocsik.utils.UIHelper;
-import sk.pocsik.utils.UserInfo;
 import sk.pocsik.views.main.MainView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.List;
 
 public class LoginView extends JFrame {
     private AuthService authService;
@@ -42,6 +42,12 @@ public class LoginView extends JFrame {
         if (username.equals("s")) {
             new MainView(authService);
             this.dispose();
+            return;
+        }
+
+        List<String> errors = authService.checkLoginFields(username, password);
+        if (!errors.isEmpty()) {
+            JOptionPane.showMessageDialog(null, String.join("\n", errors));
             return;
         }
 
