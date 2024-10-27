@@ -1,7 +1,5 @@
 package sk.pocsik.views.main;
 
-import sk.pocsik.services.AuthService;
-import sk.pocsik.utils.UserInfo;
 import sk.pocsik.views.addcardview.AddCardView;
 
 import javax.swing.*;

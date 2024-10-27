@@ -6,35 +6,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class ResultView extends JPanel {
-    public ResultView() {
+public class ResultPanel extends JPanel {
+    public ResultPanel() {
         this.init();
     }
 
     private void init() {
-        this.setPreferredSize(new Dimension(640, super.getPreferredSize().height));
+        this.setPreferredSize(new Dimension(1550, super.getPreferredSize().height));
         this.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
     }
 
     public void updateCards(List<PokemonCard> pokemonCards) {
-        System.out.println(pokemonCards.size());
-
         this.removeAll();
-
         for (PokemonCard pokemonCard : pokemonCards) {
-            this.add(new PokemonCardView(pokemonCard));
+            this.add(new PokemonCardPanel(pokemonCard));
         }
-
         updatePreferredSize();
     }
 
     private void updatePreferredSize() {
-        int rows = (int) Math.ceil(this.getComponentCount() / 4.0);
-        int height = rows * 220;
+        int rows = (int) Math.ceil(this.getComponentCount() / 5.0);
+        int height = rows * 362;
 
-        System.out.println(height);
-
-        this.setPreferredSize(new Dimension(640, height));
+        this.setPreferredSize(new Dimension(1550, height + 10));
 
         this.revalidate();
         this.repaint();

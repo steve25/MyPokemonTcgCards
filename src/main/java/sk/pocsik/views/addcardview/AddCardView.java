@@ -7,23 +7,23 @@ import java.awt.*;
 import java.util.List;
 
 public class AddCardView extends JFrame implements SearchResultListener {
-    private final ResultView resultView;
-    private final SearchView searchView;
+    private final ResultPanel resultPanel;
+    private final SearchPanel searchPanel;
 
 
     public AddCardView() {
         this.init();
 
-        searchView = new SearchView();
-        resultView = new ResultView();
+        searchPanel = new SearchPanel();
+        resultPanel = new ResultPanel();
 
-        searchView.setSearchResultListener(this);
+        searchPanel.setSearchResultListener(this);
 
-        JScrollPane scrollPane = new JScrollPane(resultView);
+        JScrollPane scrollPane = new JScrollPane(resultPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
-        this.add(searchView, BorderLayout.NORTH);
+        this.add(searchPanel, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
 
         this.setLocationRelativeTo(null);
@@ -34,12 +34,12 @@ public class AddCardView extends JFrame implements SearchResultListener {
         this.setTitle("Search Pokemon TCG Cards");
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         this.setResizable(false);
-        this.setSize((int) (1600 * 0.7), (int) (1200 * 0.7));
+        this.setSize(1600, 1200);
         this.setLayout(new BorderLayout(0, 10));
     }
 
     @Override
     public void onSearchResult(List<PokemonCard> pokemonCards) {
-        resultView.updateCards(pokemonCards);
+        resultPanel.updateCards(pokemonCards);
     }
 }

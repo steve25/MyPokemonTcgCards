@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-public class SearchView extends JPanel {
+public class SearchPanel extends JPanel {
     private final SearchService searchService;
     @Setter
     private SearchResultListener searchResultListener;
@@ -17,7 +17,7 @@ public class SearchView extends JPanel {
     private JButton searchButton;
 
 
-    public SearchView() {
+    public SearchPanel() {
         this.searchService = new SearchService();
 
         this.init();

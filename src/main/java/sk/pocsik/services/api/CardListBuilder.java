@@ -16,8 +16,8 @@ public class CardListBuilder {
     }
 
     public List<PokemonCard> build(String response) {
+        this.cards.clear();
         JsonArray jsonArray = gson.fromJson(response, JsonObject.class).getAsJsonArray("data");
-
         for (JsonElement jsonElement : jsonArray) {
             cards.add(cardBuilder.makeCard(jsonElement));
         }

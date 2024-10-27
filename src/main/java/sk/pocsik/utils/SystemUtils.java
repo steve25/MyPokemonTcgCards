@@ -15,7 +15,7 @@ public abstract class SystemUtils {
         scaleFactor = dpi / 96.0f;
         cropFactor = 1.0 / scaleFactor;
 
-        System.setProperty("sun.java2d.uiScale", Double.toString(scaleFactor));
+//        System.setProperty("sun.java2d.uiScale", Double.toString(scaleFactor));
     }
 
 }
