@@ -5,7 +5,7 @@ import sk.pocsik.views.authenticate.LoginView;
 
 public class Main {
     public static void main(String[] args) {
-        SystemUtils.setScaleFactor();
+//        SystemUtils.setScaleFactor();
 
         new LoginView();
     }

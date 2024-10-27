@@ -10,27 +10,23 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 
-public class PokemonCardView extends JPanel {
+public class PokemonCardPanel extends JPanel {
 
 
-    public PokemonCardView(PokemonCard pokemonCard) {
+    public PokemonCardPanel(PokemonCard pokemonCard) {
         this.setBackground(new Color((int) (Math.random() * 0x1000000)));
 
         System.out.println(pokemonCard.getImageUrl());
         try {
             URL url = URI.create(pokemonCard.getImageUrl()).toURL();
             BufferedImage image = ImageIO.read(url);
-
-            // Create a HighQualityImageLabel to display the image
-            HighQualityImageLabel imageLabel = new HighQualityImageLabel(image, 200, 350);
-            this.add(imageLabel); // Add image label to the panel
+            HighQualityImageLabel imageLabel = new HighQualityImageLabel(image, 245, 342);
+            this.add(imageLabel);
         } catch (IOException e) {
             System.err.println(e);
-
             JLabel label = new JLabel(pokemonCard.getName());
-            label.setPreferredSize(new Dimension(200, 350));
-            this.add(label); // Add image label to the panel
-
+            label.setPreferredSize(new Dimension(245, 342));
+            this.add(label);
         }
     }
 
