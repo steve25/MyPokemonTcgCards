@@ -9,5 +9,6 @@ public class Main {
         AuthService authService = new AuthService();
 
         new LoginView(authService);
+        //test
     }
 }
