@@ -1,7 +1,9 @@
 package sk.pocsik.views.authenticate;
 
+import sk.pocsik.models.User;
 import sk.pocsik.services.AuthService;
 import sk.pocsik.utils.UIHelper;
+import sk.pocsik.utils.UserInfo;
 import sk.pocsik.views.main.MainView;
 
 import javax.swing.*;
@@ -40,6 +42,7 @@ public class LoginView extends JFrame {
 
         // REMOVE THIS CODE TODO
         if (username.equals("s")) {
+            UserInfo.setUserInfo(new User("temp", "temp"));
             new MainView(authService);
             this.dispose();
             return;
