@@ -1,45 +1,32 @@
 package sk.pocsik.services;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import sk.pocsik.daos.UserDao;
 import sk.pocsik.models.User;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class AuthServiceTest {
     private static AuthService authService;
-    private static SessionFactory sessionFactory;
-
-    private static Session session;
+    private static AuthService mockedAuthService;
+    private static UserDao mockedUserDao;
+    private static UserService mockedUserService;
+    private static BCryptPasswordEncoder passwordEncoder;
 
 
     @BeforeAll
     public static void setup() {
         authService = new AuthService();
-        Configuration conf = new Configuration();
-        conf.addAnnotatedClass(User.class);
-        sessionFactory = conf.buildSessionFactory();
-        session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-
-        User user = new User("test", "123");
-
-        session.persist(user);
-        session.merge(user);
-        transaction.commit();
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        session.close();
-        sessionFactory.close();
+        mockedAuthService = mock(AuthService.class);
+        mockedUserDao = mock(UserDao.class);
+//        mockedUserService = new UserService(mockedUserDao);
+        passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Test
@@ -113,16 +100,18 @@ class AuthServiceTest {
 
     @Test
     public void registerUserNameIsNull() {
-
-        List<String> errors = authService.checkRegisterFields(null, "password", "password");
+        when(mockedAuthService.checkIfExists(null)).thenReturn(false);
+        when(mockedAuthService.checkRegisterFields(null, "password", "password")).thenCallRealMethod();
+        List<String> errors = mockedAuthService.checkRegisterFields(null, "password", "password");
         assertEquals(1, errors.size());
         assertTrue(errors.contains("Username is required."));
     }
 
     @Test
     public void registerUserNameIsEmpty() {
-
-        List<String> errors = authService.checkRegisterFields("", "password", "password");
+        when(mockedAuthService.checkIfExists("")).thenReturn(false);
+        when(mockedAuthService.checkRegisterFields("", "password", "password")).thenCallRealMethod();
+        List<String> errors = mockedAuthService.checkRegisterFields("", "password", "password");
         assertEquals(1, errors.size());
         assertTrue(errors.contains("Username is required."));
     }
@@ -130,46 +119,77 @@ class AuthServiceTest {
     @Test
     public void registerUserNameExceedsMaxLength() {
         String longUsername = "a".repeat(51);
-        List<String> errors = authService.checkRegisterFields(longUsername, "password", "password");
+        when(mockedAuthService.checkIfExists(longUsername)).thenReturn(false);
+        when(mockedAuthService.checkRegisterFields(longUsername, "password", "password")).thenCallRealMethod();
+        List<String> errors = mockedAuthService.checkRegisterFields(longUsername, "password", "password");
         assertEquals(1, errors.size());
         assertTrue(errors.contains("Username should not exceed 50 characters."));
     }
 
     @Test
     public void registerUserNameIsTaken() {
-        List<String> errors = authService.checkRegisterFields("steve", "password", "password");
+        when(mockedAuthService.checkIfExists("testUser")).thenReturn(true);
+        when(mockedAuthService.checkRegisterFields("testUser", "password", "password")).thenCallRealMethod();
+        List<String> errors = mockedAuthService.checkRegisterFields("testUser", "password", "password");
         assertEquals(1, errors.size());
         assertTrue(errors.contains("Username is taken."));
     }
 
     @Test
     public void registerPasswordIsNull() {
-
-        List<String> errors = authService.checkRegisterFields("username", null, "password");
+        when(mockedAuthService.checkIfExists("username")).thenReturn(false);
+        when(mockedAuthService.checkRegisterFields("username", null, "password")).thenCallRealMethod();
+        List<String> errors = mockedAuthService.checkRegisterFields("username", null, "password");
         assertEquals(1, errors.size());
         assertTrue(errors.contains("Password is required."));
     }
 
     @Test
     public void registerPasswordIsEmpty() {
-
-        List<String> errors = authService.checkRegisterFields("username", "", "password");
+        when(mockedAuthService.checkIfExists("username")).thenReturn(false);
+        when(mockedAuthService.checkRegisterFields("username", "", "password")).thenCallRealMethod();
+        List<String> errors = mockedAuthService.checkRegisterFields("username", "", "password");
         assertEquals(1, errors.size());
         assertTrue(errors.contains("Password is required."));
     }
 
     @Test
     public void registerPasswordsDoNotMatch() {
-
-        List<String> errors = authService.checkRegisterFields("username", "password", "differentPassword");
+        when(mockedAuthService.checkIfExists("username")).thenReturn(false);
+        when(mockedAuthService.checkRegisterFields("username", "password", "differentPassword")).thenCallRealMethod();
+        List<String> errors = mockedAuthService.checkRegisterFields("username", "password", "differentPassword");
         assertEquals(1, errors.size());
         assertTrue(errors.contains("Passwords not match."));
     }
 
     @Test
     public void registerValidUserNameAndPassword() {
-
-        List<String> errors = authService.checkRegisterFields("username", "password", "password");
+        when(mockedAuthService.checkIfExists("username")).thenReturn(false);
+        when(mockedAuthService.checkRegisterFields("username", "password", "password")).thenCallRealMethod();
+        List<String> errors = mockedAuthService.checkRegisterFields("username", "password", "password");
         assertEquals(0, errors.size());
+    }
+
+    @Test
+    void authenticateFoundUserAndPassword() {
+        User user = new User("user", passwordEncoder.encode("password"));
+        when(mockedUserDao.findUserByName("user")).thenReturn(user);
+//        when(mockedAuthService.authenticate("user", "password")).thenCallRealMethod();
+
+        boolean result = mockedAuthService.authenticate("user", "password");
+
+        assertTrue(result);
+    }
+
+    @Test
+    void register() {
+    }
+
+    @Test
+    void checkIfExists() {
+    }
+
+    @Test
+    void logout() {
     }
 }
