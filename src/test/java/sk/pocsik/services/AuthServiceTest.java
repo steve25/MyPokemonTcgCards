@@ -172,8 +172,12 @@ class AuthServiceTest {
 
     @Test
     void authenticateFoundUserAndPassword() {
+        System.out.println("start test");
         User user = new User("user", passwordEncoder.encode("password"));
+        System.out.println(user);
         when(mockedUserDao.findUserByName("user")).thenReturn(user);
+        User testMockedDao = mockedUserDao.findUserByName("user");
+        System.out.println(testMockedDao);
 //        when(mockedAuthService.authenticate("user", "password")).thenCallRealMethod();
 
         boolean result = mockedAuthService.authenticate("user", "password");
