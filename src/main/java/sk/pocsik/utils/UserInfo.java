@@ -1,17 +1,15 @@
 package sk.pocsik.utils;
 
 import lombok.Getter;
+import sk.pocsik.models.User;
 
 
 public abstract class UserInfo {
     @Getter
-    private static Long userId =  null;
-    @Getter
-    private static String userName = null;
+    private static User user =  null;
 
-    public static void setUserInfo(Long userId, String userName) {
-        UserInfo.userId = userId;
-        UserInfo.userName = userName;
+    public static void setUserInfo(User user) {
+        UserInfo.user = user;
     }
 
 }

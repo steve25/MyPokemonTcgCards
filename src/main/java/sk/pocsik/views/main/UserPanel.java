@@ -11,20 +11,20 @@ public class UserPanel extends JPanel {
     private JFrame parentFrame;
 
 
-    public UserPanel(JFrame parentFrame) {
+    public UserPanel(JFrame parentFrame, AuthService authService) {
         this.parentFrame = parentFrame;
-        this.authService = new AuthService();
+        this.authService = authService;
 
         this.init();
     }
 
     private void init() {
-        JLabel userNameLabel = new JLabel("Welcome: " + UserInfo.getUserName());
+        JLabel userNameLabel = new JLabel("Welcome: " + UserInfo.getUser().getUsername());
         JButton logoutButton = new JButton("Logout");
 
         logoutButton.addActionListener(e -> {
             authService.logout();
-            new LoginView();
+            new LoginView(authService);
             parentFrame.dispose(); // Close the current window when logging out.
         });
 

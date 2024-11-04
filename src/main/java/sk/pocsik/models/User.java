@@ -1,16 +1,14 @@
 package sk.pocsik.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Getter
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends BaseEntity {
+
     private String username;
     private String password;
 
@@ -23,7 +21,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id=" + super.getId() +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';

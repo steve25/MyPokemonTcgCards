@@ -1,14 +1,15 @@
 package sk.pocsik.views.authenticate;
 
 import sk.pocsik.services.AuthService;
+import sk.pocsik.utils.UIHelper;
 import sk.pocsik.views.main.MainView;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 public class RegisterView extends JFrame {
     private AuthService authService;
@@ -24,9 +25,9 @@ public class RegisterView extends JFrame {
     private JButton registerButton;
     private JButton cancelButton;
 
-    public RegisterView(JFrame parentFrame) {
+    public RegisterView(JFrame parentFrame, AuthService authService) {
         this.parentFrame = parentFrame;
-        this.authService = new AuthService();
+        this.authService = authService;
 
         this.init();
 
@@ -34,13 +35,11 @@ public class RegisterView extends JFrame {
             this.registerAction();
         });
 
-        this.usernameField.addActionListener(this.enterAction());
-        this.passwordField.addActionListener(this.enterAction());
-        this.confirmPasswordField.addActionListener(this.enterAction());
+        this.usernameField.addActionListener(UIHelper.getEnterAction(this::registerAction));
+        this.passwordField.addActionListener(UIHelper.getEnterAction(this::registerAction));
+        this.confirmPasswordField.addActionListener(UIHelper.getEnterAction(this::registerAction));
 
-        this.cancelButton.addActionListener(e -> {
-            this.onCloseAction();
-        });
+        this.cancelButton.addActionListener(e -> this.onCloseAction());
 
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -58,36 +57,19 @@ public class RegisterView extends JFrame {
         dispose();
     }
 
-    private Action enterAction() {
-        return new AbstractAction() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                registerAction();
-            }
-        };
-    }
-
     private void registerAction() {
-        String username = this.usernameField.getText();
+        String username = this.usernameField.getText().trim();
         String password = new String(this.passwordField.getPassword());
         String confirmPassword = new String(this.confirmPasswordField.getPassword());
 
-        if (!password.equals(confirmPassword)
-                || username.trim().isEmpty()
-                || password.trim().isEmpty()
-        ) {
-            JOptionPane.showMessageDialog(null, "Empty username, or passwords do not match. Please try again.");
-            return;
-        }
-
-        if (authService.checkIfExists(username)) {
-            JOptionPane.showMessageDialog(null, "Username is taken");
+        List<String> errors = authService.checkRegisterFields(username, password, confirmPassword);
+        if (!errors.isEmpty()) {
+            JOptionPane.showMessageDialog(null, String.join("\n", errors));
             return;
         }
 
         this.authService.register(username, password);
-        new MainView();
+        new MainView(authService);
         this.dispose();
     }
 
