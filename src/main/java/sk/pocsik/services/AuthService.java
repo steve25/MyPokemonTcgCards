@@ -57,7 +57,7 @@ public class AuthService {
         if (password == null || password.isEmpty()) {
             errors.add("Password is required.");
         }
-        if (password == null || !password.equals(confirmPassword)) {
+        if (password != null && !password.isEmpty() && !password.equals(confirmPassword)) {
             errors.add("Passwords not match.");
         }
 
@@ -72,7 +72,7 @@ public class AuthService {
         UserInfo.setUserInfo(user);
     }
 
-    private boolean checkIfExists(String username) {
+    public boolean checkIfExists(String username) {
         return userService.findUserByName(username) != null;
     }
 
