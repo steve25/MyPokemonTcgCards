@@ -9,29 +9,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthService {
-    private final UserDao userDao;
     private final UserService userService;
     private final BCryptPasswordEncoder passwordEncoder;
+    List<String> errors;
 
     public AuthService() {
         this.passwordEncoder = new BCryptPasswordEncoder();
-        this.userDao = new UserDao();
+        UserDao userDao = new UserDao();
         this.userService = new UserService(userDao);
+        this.errors = new ArrayList<>();
     }
 
     public List<String> checkLoginFields(String userName, String password) {
-        List<String> errors = new ArrayList<>();
+        this.errors.clear();
+
         if (userName == null || userName.isEmpty()) {
-            errors.add("Username is required.");
+            this.errors.add("Username is required.");
         }
         if (userName != null && userName.length() >= 50) {
-            errors.add("Username should not exceed 50 characters.");
+            this.errors.add("Username should not exceed 50 characters.");
         }
         if (password == null || password.isEmpty()) {
-            errors.add("Password is required.");
+            this.errors.add("Password is required.");
         }
 
-        return errors;
+        return this.errors;
     }
 
     public boolean authenticate(String username, String password) {
@@ -44,24 +46,25 @@ public class AuthService {
     }
 
     public List<String> checkRegisterFields(String userName, String password, String confirmPassword) {
-        List<String> errors = new ArrayList<>();
+        this.errors.clear();
+
         if (userName == null || userName.isEmpty()) {
-            errors.add("Username is required.");
+            this.errors.add("Username is required.");
         }
         if (userName != null && userName.length() >= 50) {
-            errors.add("Username should not exceed 50 characters.");
+            this.errors.add("Username should not exceed 50 characters.");
         }
         if (this.checkIfExists(userName)) {
-            errors.add("Username is taken.");
+            this.errors.add("Username is taken.");
         }
         if (password == null || password.isEmpty()) {
-            errors.add("Password is required.");
+            this.errors.add("Password is required.");
         }
         if (password != null && !password.isEmpty() && !password.equals(confirmPassword)) {
-            errors.add("Passwords not match.");
+            this.errors.add("Passwords not match.");
         }
 
-        return errors;
+        return this.errors;
     }
 
     public void register(String username, String password) {

@@ -2,6 +2,7 @@ package sk.pocsik.views.authenticate;
 
 import sk.pocsik.services.AuthService;
 import sk.pocsik.utils.UIHelper;
+import sk.pocsik.views.base.BaseFrame;
 import sk.pocsik.views.main.MainView;
 
 import javax.swing.*;
@@ -11,22 +12,20 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
-public class RegisterView extends JFrame {
-    private AuthService authService;
-
-    private JFrame parentFrame;
+public class RegisterView extends BaseFrame {
+    private final AuthService authService;
+    private final JFrame loginView;
     private JPanel panel;
-    private JLabel usernameLabel;
     private JTextField usernameField;
-    private JLabel passwordLabel;
     private JPasswordField passwordField;
-    private JLabel confirmPasswordLabel;
     private JPasswordField confirmPasswordField;
     private JButton registerButton;
     private JButton cancelButton;
 
-    public RegisterView(JFrame parentFrame, AuthService authService) {
-        this.parentFrame = parentFrame;
+    public RegisterView(JFrame loginView, AuthService authService) {
+        super("Register", 350, 220, JFrame.EXIT_ON_CLOSE);
+
+        this.loginView = loginView;
         this.authService = authService;
 
         this.init();
@@ -48,12 +47,38 @@ public class RegisterView extends JFrame {
             }
         });
 
-        this.add(panel);
 
+    }
+
+    private void init() {
+        this.panel = new JPanel();
+        this.panel.setLayout(new GridLayout(4, 2, 10, 10));
+        this.panel.setBorder(new EmptyBorder(15, 15, 15, 15));
+
+        JLabel usernameLabel = new JLabel("Username:");
+        this.usernameField = new JTextField();
+        JLabel passwordLabel = new JLabel("Password:");
+        this.passwordField = new JPasswordField();
+        JLabel confirmPasswordLabel = new JLabel("Confirm Password:");
+        this.confirmPasswordField = new JPasswordField();
+        this.registerButton = new JButton("Register");
+        this.cancelButton = new JButton("Cancel");
+
+        this.panel.add(usernameLabel);
+        this.panel.add(this.usernameField);
+        this.panel.add(passwordLabel);
+        this.panel.add(this.passwordField);
+        this.panel.add(confirmPasswordLabel);
+        this.panel.add(this.confirmPasswordField);
+        this.panel.add(this.registerButton);
+        this.panel.add(this.cancelButton);
+
+        this.add(panel);
         this.setVisible(true);
     }
+
     private void onCloseAction() {
-        this.parentFrame.setVisible(true);
+        this.loginView.setVisible(true);
         dispose();
     }
 
@@ -71,35 +96,5 @@ public class RegisterView extends JFrame {
         this.authService.register(username, password);
         new MainView(authService);
         this.dispose();
-    }
-
-    private void init() {
-        this.setTitle("Register");
-        this.setSize(400, 200);
-        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
-
-        this.panel = new JPanel();
-        this.panel.setLayout(new GridLayout(4, 2, 10, 10));
-        this.panel.setBorder(new EmptyBorder(15, 15, 15, 15));
-
-        this.usernameLabel = new JLabel("Username:");
-        this.usernameField = new JTextField();
-        this.passwordLabel = new JLabel("Password:");
-        this.passwordField = new JPasswordField();
-        this.confirmPasswordLabel = new JLabel("Confirm Password:");
-        this.confirmPasswordField = new JPasswordField();
-        this.registerButton = new JButton("Register");
-        this.cancelButton = new JButton("Cancel");
-
-        this.panel.add(this.usernameLabel);
-        this.panel.add(this.usernameField);
-        this.panel.add(this.passwordLabel);
-        this.panel.add(this.passwordField);
-        this.panel.add(this.confirmPasswordLabel);
-        this.panel.add(this.confirmPasswordField);
-        this.panel.add(this.registerButton);
-        this.panel.add(this.cancelButton);
     }
 }

@@ -1,16 +1,16 @@
-package sk.pocsik.views.addcardview;
+package sk.pocsik.views.pokemons;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class HighQualityImageLabel extends JLabel {
-    private BufferedImage image;
-    private int targetWidth;
-    private int targetHeight;
+public class PokemonImageLabel extends JLabel {
+    private final BufferedImage image;
+    private final int targetWidth;
+    private final int targetHeight;
 
 
-    public HighQualityImageLabel(BufferedImage img, int width, int height) {
+    public PokemonImageLabel(BufferedImage img, int width, int height) {
         this.image = img;
         this.targetWidth = width;
         this.targetHeight = height;

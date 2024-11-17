@@ -38,7 +38,7 @@ public class UserDao extends CustomDao {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
             Root<User> userRoot = criteriaQuery.from(User.class);
-           criteriaQuery.select(userRoot).where(criteriaBuilder.and
+            criteriaQuery.select(userRoot).where(criteriaBuilder.and
                     (criteriaBuilder.equal(userRoot.get("username"), username))
             );
 

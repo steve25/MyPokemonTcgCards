@@ -5,9 +5,11 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 
 public class HttpService {
 
@@ -15,6 +17,8 @@ public class HttpService {
     String apiUrl;
     String apiKey;
     HttpClient httpClient;
+
+//    ?q=name:query*&orderBy=name/?select=id,name,images,tcgplayer
 
     public HttpService() {
         this.dotenv = Dotenv.load();
@@ -25,7 +29,7 @@ public class HttpService {
 
     public String findCardByName(String name) {
         StringBuilder url = new StringBuilder(this.apiUrl).append("?q=name:")
-                .append(name)
+                .append(URLEncoder.encode(name, StandardCharsets.UTF_8))
                 .append("*")
                 .append("&orderBy=name")
                 .append("/?select=id,name,images,tcgplayer");
@@ -40,6 +44,8 @@ public class HttpService {
                     .build();
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            System.out.println(response.body());
 
             return response.body();
 
