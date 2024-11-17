@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.internal.util.config.ConfigurationException;
+import sk.pocsik.models.Pokemon;
 import sk.pocsik.models.User;
 
 public class HibernateUtil {
@@ -17,11 +18,11 @@ public class HibernateUtil {
         String dbUrl = dotenv.get("DB_URL");
         String dbUsername = dotenv.get("DB_USER");
         String dbPassword = dotenv.get("DB_PASSWORD");
-        System.out.println(dbUrl);
 
         try {
             Configuration conf = new Configuration();
             conf.addAnnotatedClass(User.class);
+            conf.addAnnotatedClass(Pokemon.class);
             conf.setProperty("hibernate.connection.url", dbUrl);
             conf.setProperty("hibernate.connection.username", dbUsername);
             conf.setProperty("hibernate.connection.password", dbPassword);

@@ -1,7 +1,7 @@
-package sk.pocsik.views.addcardview;
+package sk.pocsik.views.add;
 
 import lombok.Setter;
-import sk.pocsik.models.PokemonCard;
+import sk.pocsik.models.Pokemon;
 import sk.pocsik.services.SearchService;
 
 import javax.swing.*;
@@ -10,9 +10,7 @@ import java.util.List;
 
 public class SearchPanel extends JPanel {
     private final SearchService searchService;
-    @Setter
-    private SearchResultListener searchResultListener;
-    private JLabel searchLabel;
+    @Setter private SearchResultListener searchResultListener;
     private JTextField searchField;
     private JButton searchButton;
 
@@ -33,7 +31,7 @@ public class SearchPanel extends JPanel {
     }
 
     private void init() {
-        searchLabel = new JLabel("Search for a card:");
+        JLabel searchLabel = new JLabel("Search for a card:");
         searchField = new JTextField(20);
         searchButton = new JButton("Search");
 
@@ -43,12 +41,11 @@ public class SearchPanel extends JPanel {
     }
 
     private void search(JTextField searchField) {
-        String cardName = searchField.getText().trim();
-        List<PokemonCard> pokemonCards = searchService.build(cardName);
+        String query = searchField.getText().trim();
+        List<Pokemon> pokemons = searchService.build(query);
 
         if (searchResultListener != null) {
-            searchResultListener.onSearchResult(pokemonCards);
+            searchResultListener.onSearchResult(pokemons);
         }
     }
-
 }
